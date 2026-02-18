@@ -5,6 +5,16 @@ class Board
     @board = Array.new(6) { Array.new(7, '') }
   end
 
+  def display_board
+    puts '  1    2    3    4    5    6    7'
+    @board.each do |row|
+      row.each do |cell|
+        print "| #{cell.empty? ? ' ' : cell} |"
+      end
+      puts
+    end
+  end
+
   def drop_chip(col, marker)
     rows = 6
     row = (rows - 1).downto(0).find { |row| @board[row][col - 1] == '' }
@@ -15,12 +25,22 @@ class Board
     board[0][col - 1] == ''
   end
 
+  def get_valid_column
+    loop do
+      print 'Enter column (1-7): '
+      column = gets.chomp.to_i
+      return column if valid_move?(column)
+
+      puts 'Invalid move! Try again.'
+    end
+  end
+
   def winner?
     check_horizontal || check_vertical || check_diagonal_ascending || check_diagonal_descending
   end
 
-  def board_full?
-    @board.none? { |slot| slot == '' }
+  def full?
+    @board.flatten.none? { |cell| cell == '' }
   end
 
   private

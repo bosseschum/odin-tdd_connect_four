@@ -103,7 +103,7 @@ describe Board do
     end
   end
 
-  describe '#board_full?' do
+  describe '#full?' do
     context 'when all slots are taken' do
       it 'returns true' do
         board.board = [
